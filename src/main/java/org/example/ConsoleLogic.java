@@ -2,34 +2,38 @@ package org.example;
 
 import java.util.Scanner;
 
-public class GameLogic {
-    Dictionary dictionary = new Dictionary();
-    Scanner scanner = new Scanner(System.in);
-    HangPicture hang = new HangPicture();
+public class ConsoleLogic {
+    private final Dictionary dictionary;
+    private final HangPicture hang;
+    private int attempts = 5;
 
-    int triesCount = 5;
-    String word = dictionary.getRandomWord();
-    StringBuilder hiddenWord = dictionary.getHiddenWord(word);
-    StringBuilder usedLetters = new StringBuilder();
+    public ConsoleLogic() {
+        this.dictionary = new Dictionary();
+        this.hang = new HangPicture();
+    }
 
-    void guessWord() {
+    private String word = dictionary.getRandomWord();
+    private StringBuilder hiddenWord = dictionary.getHiddenWord(word);
+    private StringBuilder usedLetters = new StringBuilder();
+
+    void start() {
 
         System.out.println("Отгадайте слово: " + hiddenWord);
-//        System.out.println(word);
 
-        while (triesCount > 0) {
+        while (attempts > 0) {
             System.out.print("Введите букву: ");
-            String userInput = scanner.nextLine().toLowerCase();
+            String userInput = Keyboard.input().toLowerCase();
+
             if (!word.contains(userInput)) {
                 if (!usedLetters.toString().contains(userInput)) {
                     usedLetters.append(userInput).append(" ");
                 } else {
-                    triesCount++;
+                    attempts++;
                 }
                 System.out.println("Использованные буквы: " + usedLetters);
-                triesCount--;
+                attempts--;
                 System.out.println(hiddenWord);
-                hang.drawHang(triesCount);
+                hang.drawHang(attempts);
                 checkTriesCount();
                 continue;
             }
@@ -56,12 +60,12 @@ public class GameLogic {
     }
 
     void checkTriesCount() {
-        if (triesCount == 0) {
+        if (attempts == 0) {
             System.out.println("У вас не осталось попыток.");
             System.out.printf("Вы проиграли. Загаданное слово - %s\n", word.substring(0, 1).toUpperCase() +
-                    word.substring(1));
+                word.substring(1));
         } else {
-            System.out.printf("Такой буквы в слове нет.\nКоличество оставшихся попыток- %d\n", triesCount);
+            System.out.printf("Такой буквы в слове нет.\nКоличество оставшихся попыток- %d\n", attempts);
         }
     }
 }

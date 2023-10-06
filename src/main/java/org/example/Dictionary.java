@@ -12,7 +12,7 @@ public class Dictionary {
         return words;
     }
 
-    public String getRandomWord() {
+/*    public String getRandomWord() {
         Random random = new Random();
         int wordIndex = random.nextInt(getWords().size());
         return getWords().get(wordIndex).toLowerCase();
@@ -22,5 +22,5 @@ public class Dictionary {
         StringBuilder hiddenWord = new StringBuilder();
         hiddenWord.append("*".repeat(word.length()));
         return hiddenWord;
-    }
+    }*/
 }

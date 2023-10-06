@@ -3,7 +3,8 @@ package org.example;
 public class Main {
 
     public static void main(String[] args) {
-        GameStarter gameStarter = new GameStarter();
-        gameStarter.getStart();
+        final ConsoleLogic consoleLogic = new ConsoleLogic();
+        Game game = new Game(consoleLogic);
+        game.start();
     }
 }
