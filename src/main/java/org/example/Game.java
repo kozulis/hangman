@@ -2,22 +2,17 @@ package org.example;
 
 public class Game {
     private final ConsoleLogic consoleLogic;
-    private final Keyboard keyboard;
     private final Menu menu;
 
     public Game(ConsoleLogic consoleLogic) {
         this.consoleLogic = consoleLogic;
-        this.keyboard = new Keyboard();
         this.menu = new Menu();
     }
 
     public void start() {
-
         while (true) {
-
             menu.print();
-
-            String inputted = keyboard.input();
+            String inputted = Keyboard.input();
 
             if (inputted.equals("1")) {
                 System.out.println("Да начнутся голодные игры!");

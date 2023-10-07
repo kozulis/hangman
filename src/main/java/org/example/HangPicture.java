@@ -2,7 +2,7 @@ package org.example;
 
 public class HangPicture {
 
-    void drawHang(int triesCount) {
+    void draw(int triesCount) {
         System.out.println(getMistakesHang(triesCount));
     }
 
