@@ -23,12 +23,17 @@ public class ConsoleLogic {
 
     void start() {
         System.out.println("Отгадайте слово: " + hiddenWord);
-        System.out.println(randomWord);
+
         while (attempts > 0) {
-            System.out.print("Введите букву: ");
+            System.out.print("Введите букву русского алфавита: ");
             String userInput = Keyboard.input().toLowerCase();
 
-            if (usedChars.contains(this.getFirstCharFromString(userInput))) {
+            if (!isRussianAlphabet(userInput)) {
+                System.out.println("Введен некорректный символ");
+                continue;
+            }
+
+            if (isLetterWasAlreadyEntered(userInput)) {
                 System.out.println("Такая буква уже была введена");
                 this.printUsedChars();
                 this.printHiddenWord();
@@ -61,6 +66,14 @@ public class ConsoleLogic {
                 }
             }
         }
+    }
+
+    private static boolean isRussianAlphabet(String userInput) {
+        return userInput.matches("[а-я]");
+    }
+
+    private boolean isLetterWasAlreadyEntered(String userInput) {
+        return usedChars.contains(this.getFirstCharFromString(userInput));
     }
 
     private boolean isNoMoreAttempts() {
