@@ -9,22 +9,27 @@ public class ConsoleLogic {
     private final Dictionary dictionary;
     private final HangPicture hangPicture;
     private final List<Character> usedChars;
-    private int attempts = 5;
-    private final String randomWord;
+
+    private static final int ATTEMPTS = 5;
+    private int attemptsCount;
+    private String randomWord;
     private String hiddenWord;
 
     public ConsoleLogic() {
         this.dictionary = new Dictionary();
         this.hangPicture = new HangPicture();
         this.usedChars = new ArrayList<>();
-        this.randomWord = this.getRandomWord(dictionary.getWords());
-        this.hiddenWord = this.getHiddenWord(randomWord);
     }
 
     void start() {
+        randomWord = this.getRandomWord(dictionary.getWords());
+        hiddenWord = this.getHiddenWord(randomWord);
+        usedChars.clear();
+        attemptsCount = ATTEMPTS;
         System.out.println("Отгадайте слово: " + hiddenWord);
+        System.out.println(randomWord);
 
-        while (attempts > 0) {
+        while (attemptsCount > 0) {
             System.out.print("Введите букву русского алфавита: ");
             String userInput = Keyboard.input().toLowerCase();
 
@@ -52,11 +57,11 @@ public class ConsoleLogic {
                     return;
                 }
             } else {
-                attempts--;
-                System.out.printf("Такой буквы в слове нет.\nКоличество оставшихся попыток- %d\n", attempts);
+                attemptsCount--;
+                System.out.printf("Такой буквы в слове нет.\nКоличество оставшихся попыток- %d\n", attemptsCount);
                 this.printUsedChars();
                 this.printHiddenWord();
-                hangPicture.draw(attempts);
+                hangPicture.draw(attemptsCount);
 
                 if (isNoMoreAttempts()) {
                     System.out.println("У вас не осталось попыток.");
@@ -77,7 +82,7 @@ public class ConsoleLogic {
     }
 
     private boolean isNoMoreAttempts() {
-        return attempts == 0;
+        return attemptsCount == 0;
     }
 
     private char getFirstCharFromString(String userInput) {
